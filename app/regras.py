@@ -21,15 +21,19 @@ class RegraVioladaError(ValueError):
 
 def calcular_valor_pagamento(valor: Decimal, vencimento: date, pagamento: date) -> Decimal:
     """Regra 9: desconto por antecipação, valor cheio ou valor com encargos."""
+
     dias_antecedencia = (vencimento - pagamento).days
 
     if dias_antecedencia >= 10:
         desconto = (valor * Decimal("0.05")).quantize(
-            CENTAVO, rounding=ROUND_HALF_UP
+            CENTAVO,
+            rounding=ROUND_HALF_UP
         )
         return valor - desconto
 
-    return valor
+    encargos = calcular_encargos(valor, vencimento, pagamento)
+
+    return valor + encargos
 
 
 def proximo_dia_util(data: date) -> date:
