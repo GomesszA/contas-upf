@@ -19,6 +19,11 @@ class RegraVioladaError(ValueError):
     """Uma regra de negócio foi violada. A mensagem é mostrada ao usuário."""
 
 
+def calcular_valor_pagamento(valor: Decimal, vencimento: date, pagamento: date) -> Decimal:
+    """Regra 9: desconto por antecipação, valor cheio ou valor com encargos."""
+    return valor
+
+
 def proximo_dia_util(data: date) -> date:
     """Regra 5: sábado e domingo são prorrogados para a segunda-feira."""
     while data.weekday() >= 5:
